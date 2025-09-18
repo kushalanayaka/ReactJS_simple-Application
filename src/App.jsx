@@ -5,12 +5,15 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  // Get API URL from env variable
+  const JOKE_API_URL = import.meta.env.VITE_JOKE_API_URL;
+
   // Function to fetch joke
   const fetchJoke = async () => {
     try {
       setLoading(true);
       setError("");
-      const response = await fetch("https://official-joke-api.appspot.com/random_joke");
+      const response = await fetch(JOKE_API_URL);
 
       if (!response.ok) {
         throw new Error("Failed to fetch joke");
@@ -32,8 +35,15 @@ function App() {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white">
-      <h1 className="text-4xl font-bold mb-8">🎭 Random Joke Generator</h1>
+      {/* Title */}
+      <h1 className="text-4xl font-bold mb-4">🎭 Random Joke Generator</h1>
 
+      {/* Added your name here */}
+      <h2 className="text-lg font-medium mb-8">
+        Created by <span className="font-bold text-yellow-300">Kushal</span>
+      </h2>
+
+      {/* Joke Card */}
       <div className="bg-white text-black rounded-2xl shadow-lg p-6 max-w-xl text-center">
         {loading ? (
           <p className="text-lg animate-pulse">Loading joke...</p>
@@ -44,13 +54,13 @@ function App() {
         )}
       </div>
 
+      {/* Button */}
       <button
         onClick={fetchJoke}
         className="mt-6 px-6 py-3 bg-yellow-400 text-black rounded-lg font-semibold hover:bg-yellow-300 transition"
       >
         Get Another Joke 😂
       </button>
-      <footer>Developed by Kushal</footer>
     </div>
   );
 }
